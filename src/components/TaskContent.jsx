@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, {  useState } from 'react'
+import {  useTasks } from '../contexts/TasksContext';
 
-export default function TaskContent({task, onChange}) {
+export default function TaskContent({task}) {
         const [isEditing, setIsEditing]=useState(false);
+         const {onChangeTask}= useTasks();
   return (
     <div>
         {isEditing? (
@@ -10,7 +12,7 @@ export default function TaskContent({task, onChange}) {
                     type="text"
                         value={task.text}
                         key={task.id}
-                        onChange={(e) => onChange({
+                        onChange={(e) => onChangeTask({
                                                     ...task,
                                                     text: e.target.value,
 
