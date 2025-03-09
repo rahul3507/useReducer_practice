@@ -1,35 +1,25 @@
 
 
-export default function taskReducer(tasks, action) {
+export default function taskReducer(draft, action) {
   
     switch (action.type) {
         case 'added':
-            return[
-                ...tasks,
-                {
-                  id: action.id,
-                  text: action.text,
-                  done:false,
-                }
-              ];
+            draft.push({
+                id: action.id,
+                text: action.text,
+                done:false,
+              });
+              break;
 
-        case 'changed':
-            return tasks.map((t)=>{
-                if(t.id===action.task.id){
-                    return {
-                        ...t,
-                        text: action.task.text,
-                        done: action.task.done
-                    }
-                }
-                else{
-                    return t;
-                        
-                    
-                }
-            });
+        case 'changed':{
+            const index= draft.findIndex((t)=> t.id===action.task.id);
+            draft[index].text=action.task.text;
+            draft[index].done=action.task.done;
+            break;
+        }
+            
         case 'deleted':
-            return  tasks.filter((t)=> t.id!==action.id)
+            return  draft.filter((t)=> t.id!==action.id)
 
 
         default:

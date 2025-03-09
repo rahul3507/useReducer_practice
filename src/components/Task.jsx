@@ -1,25 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
+import TaskContent from './TaskContent';
 
 export default function Task({task, onChange , onDelete}) {
-    const [isEditing, setIsEditing]=useState(false);
-    const taskContent = isEditing? (<>
-                                        <input 
-                                                type="text"
-                                                value={task.text}
-                                                key={task.id}
-                                                onChange={(e) => onChange({
-                                                    ...task,
-                                                    text: e.target.value,
-
-                                                })}    
-                                                    />
-                                        <button onClick={()=>(setIsEditing(false))}>Save</button>
-                                    </>) : (<>
-                                            {task.text}
-                                            <button onClick={()=>(setIsEditing(true))}>Edit</button>
-                                         </>
-                                             )
-
+    
  
                                     
   return (
@@ -28,8 +11,9 @@ export default function Task({task, onChange , onDelete}) {
         ...task,
         done: e.target.checked
       })}/>
-
-     {taskContent}
+      
+      <TaskContent task={task} onChange={onChange}/>
+    
 
       <button onClick={()=>(onDelete(task.id))}>Delete</button>
     </>
